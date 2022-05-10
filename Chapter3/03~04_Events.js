@@ -59,4 +59,3 @@ function handleMouseLeave() {
 };
 
 title.addEventListener("mouseleave", handleMouseLeave);
-
