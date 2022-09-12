@@ -41,6 +41,11 @@ title.addEventListener("click", handleTitleClick);
 //        JavaScript 에 function 이름을 넘겨줘서 JavaScript 가 실행버튼을 눌러줌
 
 
+// * 구글링 팁
+//   : 찾고싶은 element 이름 + html element mdn
+//     ex. h1 html element mdn
+
+
 // [ 실습 4 ] mouseeneter event listen 해보기
 // 1. console.dir(title) 에서 찾은 onmouseeneter 찾아서 on 빼고 복사해오기
 // 2. function 만들어서 걸어주기
@@ -59,3 +64,8 @@ function handleMouseLeave() {
 };
 
 title.addEventListener("mouseleave", handleMouseLeave);
+
+
+// 보통 style 은 CSS 에서 바꾸는게 맞음. 
+// 그렇다고 지금처럼 JS 를 사용해 바꾸는게 틀린 것은 아님.
+// ▶ 그래서 다음 시간엔 CSS 파일을 어떻게 사용하는지 배워볼게요 !
