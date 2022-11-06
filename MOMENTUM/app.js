@@ -7,6 +7,10 @@
 const loginForm = document.querySelector("#login-form");
 const loginInput = document.querySelector("#login-form input");
 // const loginButton = document.querySelector("#login-form button");
+const greeting = document.querySelector("#greeting");
+const HIDDEN_CLASSNAME = "hidden";
+
+// const link = document.querySelector("a");
 
 
 // [ #4.0 실습 01 ] click event 감지하기 + value 가져오기
@@ -58,19 +62,21 @@ const loginInput = document.querySelector("#login-form input");
 //                      아무것도 하지 않아도, JS 가 어떤 정보를 담은 채로 function 을 호출 할 수 있음
 //                   ▶ submit event 를 우리가 컨트롤 할 수 있음 !!!!!!!!!!
 
-function onLoginSubmit(event) {
-    // const username = loginInput.value;
-    event.preventDefault();
-    console.log(loginInput.value);
-};
+// function onLoginSubmit(event) {
+//     // const username = loginInput.value;
+//     event.preventDefault();
+//     console.log(loginInput.value);
+// };
 
-loginForm.addEventListener("submit", onLoginSubmit);
+// loginForm.addEventListener("submit", onLoginSubmit);
 // ▲ 원래 eventlistener 에서 function 을 넣을때는 () (실행버튼) 을 넣지 않지.
 //   "submit" 행동이 "일어나면", 브라우저가 저 function 을 실행해 줄 것이니까.
 //   ▷ 근데 사실은.. 브라우저가 function 을 실행시킨다기 보다는..
 //      - 브라우저는 function 을 호출하고
 //      - 브라우저는 브라우저 내의 event 로부터 정보를 잡아내서 
 //      - function 의 ( ) 안에 정보를 넣어서 실행버튼인 () 를 누르고 있는 것임 !!
+//         = JS 에게 함수의 이름만 주고, 실행을 하는건 JS 의 몫
+//      - 만약 addEventListener 의 펑션에 () 를 넣으면, 딱 한 번만 실행되고 더이상 실행되지 않을 것임
 //      ▶ function 의 첫 번째 argument 로 뭘 넣고, argument.preventDefault() 로 로그 찍어서 확인해 볼 수 있음
 //   ▶ 모든 EventLsitener 의 첫 번째 argument 는 항상 방금 일어난 그 event 에 대한 정보와 같음
 //      단, JS 는 언제나 정보를 가지고는 있고, 그걸 받아보려면 공간(= argument) 만 선언해주면 됨 !
@@ -79,3 +85,67 @@ loginForm.addEventListener("submit", onLoginSubmit);
 //                       ㄴ 기본 행동 : 어떤 function 에 대해 브라우저가 기본적으로 수행하는 동작
 
 
+
+// [ #4.3 실습 01 ] preventDeafault 이해해보기
+//                 : form 태그 잠깐 잊고 a 태그를 사용해서, JS 로 기본 동작 막기
+// function handleLinkClick(event) {
+//     event.preventDefault();
+//     console.dir(event);
+//     // console.log(event);
+//     // ▲ event 를 첫 번째 인자로 넣고 찍어보기 
+//     //   : PointerEvent 가 나옴, XY 좌표도 찍어볼 수 있음 !!
+//     //     그리고 이 obejct 의 defaultPrevented 값이 true 임
+//     // alert("clicked!");  
+//     //  ▲ alert 를 누르면 바로 화면이 넘어가지 않고(=blocked) 안내 창이 뜨며, 확인을 눌러야 링크로 넘어감
+// }
+
+// link.addEventListener("click", handleLinkClick);
+// ▲ click 이 되는순간, JS 는 함수를 실행시키는 동시에 
+//   그 함수의 첫번째 인자로 object 를 넣어 줌
+//   그리고 이 object 에는 방금 일어난 event 에 대한 여러 정보가 담겨있음 (= handleLinkClick({info about the event that just happened}))
+//   ▷ 우리는 argument 를 받아주기만 하면 됨
+
+
+
+// [ #4.4 실습 01 ] 유저가 이름을 제출하면 로그인 form 을 없애기
+//                 방법 1) HTML 요소 자체를 없애기
+//                 방법 2) CSS 를 사용해서 숨기기 ◀ 우리가 할 거
+//                 ▶ 그리고 const username 선언해서 받은 값을 저장하고
+//                    loginForm 에 hidden 클래스를 추가해주면 됨
+// [ #4.4 실습 02 ] 실습 01 받고 다른 html 요소 추가하기
+//                 : 우리의 목표는 
+//                   유저 이름 변수로 저장 - form 숨기고 - 값을 h1 에 넣어주기
+// [ #4.4 실습 03 ] 백틱 사용하기 
+//                 : string 끼리 붙일 때 더 편하게 붙일 수 있음
+
+// function onLoginSubmit(event) {
+//     event.preventDefault();
+//     const username = loginInput.value;
+//     loginForm.classList.add(HIDDEN_CLASSNAME);
+//     console.log(username);
+//     // greeting.innerText = "Hello " + username;
+//     greeting.innerText = `Hello ${username}`;
+//     greeting.classList.remove(HIDDEN_CLASSNAME);
+// };
+
+// loginForm.addEventListener("submit", onLoginSubmit);
+
+
+
+// [ #4.5 실습 01 ] local Storage API 를 사용해 새로고침 할 때도 form 을 볼 필요없이 이름을 저장시키기
+//                 : 지금 form 은 submit 하기만을 기다리고있음 !!
+//                  ▶ 콘솔에 localStorage 입력하면 Storage 라는 object 를 볼수 있음
+//                     ▷ 개발자 도구 \ Application \ Local Storage 에서 확인 가능
+//                  ▶ setItem 메소드를 이용해서 localStorage 에 무언가를 저장할 수 잇음
+//                  ▷ 하지만.. form 태그가 없어지지 않아........
+
+function onLoginSubmit(event) {
+    event.preventDefault();
+    loginForm.classList.add(HIDDEN_CLASSNAME);
+    const username = loginInput.value;
+    localStorage.setItem("username", username);
+    greeting.innerText = `Hello ${username}`;
+    greeting.classList.remove(HIDDEN_CLASSNAME);
+};
+
+loginForm.addEventListener("submit", onLoginSubmit);
