@@ -1,3 +1,6 @@
+/* [ #4.4 실습 01 ] 유저가 이름을 제출하면 로그인 form 을 없애기
+                    : 어떤 HTML 요소에세 이 classname 을 주면, 그 요소를 숨기게 될 것임
+*/
 .hidden {
     display: none;
 }

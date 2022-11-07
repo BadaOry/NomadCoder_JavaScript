@@ -8,7 +8,9 @@ const loginForm = document.querySelector("#login-form");
 const loginInput = document.querySelector("#login-form input");
 // const loginButton = document.querySelector("#login-form button");
 const greeting = document.querySelector("#greeting");
+
 const HIDDEN_CLASSNAME = "hidden";
+const USERNAME_KEY = "username";
 
 // const link = document.querySelector("a");
 
@@ -139,13 +141,70 @@ const HIDDEN_CLASSNAME = "hidden";
 //                  ▶ setItem 메소드를 이용해서 localStorage 에 무언가를 저장할 수 잇음
 //                  ▷ 하지만.. form 태그가 없어지지 않아........
 
+// function onLoginSubmit(event) {
+//     event.preventDefault();
+//     loginForm.classList.add(HIDDEN_CLASSNAME);
+//     const username = loginInput.value;
+//     localStorage.setItem(USERNAME_KEY, username);
+//     paintGreetings(username);
+// };
+
+// loginForm.addEventListener("submit", onLoginSubmit);
+
+
+
+// [ #4.6 실습 01 ] local storage 에 유저 정보가 있으면 h1 을 보여주기
+//                 : 그런데 greeting ineerText & classList.remove 를 두 번이나 하고 있음
+//                   ▷ 이게 싫어서 function 을 만들게요
+//                   ▶ 이 코드들은 두 가지 상황에서 username 을 보여줄 것임
+//                      1) localStorage 에 유저 정보가 있는 경우 : 여기서 정보를 받아서 인자로 넣어줌
+//                      2) localStorage 에 유저 정보가 없는 경우 : form 의 submit 을 기다려서, 
+//                                                                submit 되면 input 에서 정보를 받아서 paintGreeting 에 인자로 넣어줌
+
+// function paintGreetings(username) {
+//     greeting.innerText = `Hello ${username}`;
+//     greeting.classList.remove(HIDDEN_CLASSNAME);
+// }
+
+// const savedUsername = localStorage.getItem(USERNAME_KEY);
+
+// if(savedUsername === null) {
+//     // show the form
+//     loginForm.classList.remove(HIDDEN_CLASSNAME);
+//     loginForm.addEventListener("submit", onLoginSubmit);
+// } else {
+//     // show the greetings
+//     paintGreetings(savedUsername);
+// }
+
+
+
+// [ #4.6 실습 01 ] 마지막으로 코드 리팩토링
+//                 : patinGretting 은 사실 인자를 받을 필요가 없음. 어차피 localstorage 것을 땡겨올 테니까.
+
 function onLoginSubmit(event) {
     event.preventDefault();
     loginForm.classList.add(HIDDEN_CLASSNAME);
     const username = loginInput.value;
-    localStorage.setItem("username", username);
-    greeting.innerText = `Hello ${username}`;
-    greeting.classList.remove(HIDDEN_CLASSNAME);
+    localStorage.setItem(USERNAME_KEY, username);
+    paintGreetings();
 };
 
 loginForm.addEventListener("submit", onLoginSubmit);
+
+function paintGreetings() {
+    const username = localStorage.getItem(USERNAME_KEY);
+    greeting.innerText = `Hello ${username}`;
+    greeting.classList.remove(HIDDEN_CLASSNAME);
+}
+
+const savedUsername = localStorage.getItem(USERNAME_KEY);
+
+if(savedUsername === null) {
+    // show the form
+    loginForm.classList.remove(HIDDEN_CLASSNAME);
+    loginForm.addEventListener("submit", onLoginSubmit);
+} else {
+    // show the greetings
+    paintGreetings();
+}
